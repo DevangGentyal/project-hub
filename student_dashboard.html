@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Project Tracking System</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/student_dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <i class="ri-user-line"></i>
+                </div>
+                <div class="profile-info">
+                    <a href="#" class="profile-link">Profile</a>
+                    <a href="#" class="logout-link">Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Students Dashboard</h1>
+            </div>
+
+            <!-- Subjects Grid -->
+            <div class="subjects-grid">
+                <!-- DBMS Subject Card -->
+                <div class="subject-card" data-subject="DBMS">
+                    <div class="subject-content">
+                        <h2 class="subject-title">DBMS</h2>
+                        <p class="guide-name">Guide Name</p>
+                    </div>
+                </div>
+
+                <!-- OOP Subject Card -->
+                <div class="subject-card" data-subject="OOP">
+                    <div class="subject-content">
+                        <h2 class="subject-title">OOP</h2>
+                        <p class="guide-name">Guide Name</p>
+                    </div>
+                </div>
+
+                <!-- JAVA Subject Card -->
+                <div class="subject-card" data-subject="JAVA">
+                    <div class="subject-content">
+                        <h2 class="subject-title">JAVA</h2>
+                        <p class="guide-name">Guide Name</p>
+                    </div>
+                </div>
+
+                <!-- AI Subject Card -->
+                <div class="subject-card" data-subject="AI">
+                    <div class="subject-content">
+                        <h2 class="subject-title">AI</h2>
+                        <p class="guide-name">Guide Name</p>
+                    </div>
+                </div>
+
+                <!-- MATHS Subject Card -->
+                <div class="subject-card" data-subject="MATHS">
+                    <div class="subject-content">
+                        <h2 class="subject-title">MATHS</h2>
+                        <p class="guide-name">Guide Name</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Join Subject Section -->
+            <div class="join-subject-section">
+                <button class="join-subject-btn">
+                    <i class="ri-add-line"></i>
+                    Join Subject
+                </button>
+
+                <!-- Join Subject Modal -->
+                <div class="join-subject-modal" style="display: none;">
+                    <div class="modal-content">
+                        <h2>Enter Subject Code</h2>
+                        <div class="code-input-wrapper">
+                            <input type="text" id="subjectCode" placeholder="#SBJ55" maxlength="6">
+                        </div>
+                        <div class="modal-actions">
+                            <button class="join-btn">Join</button>
+                            <button class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const joinSubjectBtn = document.querySelector('.join-subject-btn');
+            const modal = document.querySelector('.join-subject-modal');
+            const cancelBtn = modal.querySelector('.cancel-btn');
+            const joinBtn = modal.querySelector('.join-btn');
+            const subjectCodeInput = document.getElementById('subjectCode');
+            const subjectCards = document.querySelectorAll('.subject-card');
+
+            // Show modal
+            joinSubjectBtn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                subjectCodeInput.focus();
+            });
+
+            // Hide modal
+            cancelBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                subjectCodeInput.value = '';
+            });
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    subjectCodeInput.value = '';
+                }
+            });
+
+            // Join subject
+            joinBtn.addEventListener('click', () => {
+                const code = subjectCodeInput.value.trim();
+                if (code) {
+                    // TODO: Validate code and add subject
+                    console.log('Joining subject with code:', code);
+                    modal.style.display = 'none';
+                    subjectCodeInput.value = '';
+                }
+            });
+
+            // Navigate to subject view
+            subjectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const subject = card.dataset.subject;
+                    window.location.href = `team_view.html?subject=${subject}`;
+                });
+            });
+
+            // Handle input formatting
+            subjectCodeInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+                if (!value.startsWith('#')) {
+                    value = '#' + value;
+                }
+                e.target.value = value.slice(0, 6);
+            });
+        });
+    </script>
+</body>
+</html> 
